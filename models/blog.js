@@ -1,25 +1,22 @@
-import mongoose from "mongoose";
-const blogSchema=new mongoose.Schema({
+import mongoose, { Types } from "mongoose";
+const blogSchema= new mongoose.Schema({
     title:{
         type:String,
         required:true
     },
-    content:{
+    body:{
         type:String,
         required:true
     },
-    author:{
+    imageURL:{
         type:String,
         required:true
     },
-    coverImageUrl:{
-        type:String,
-        required:true
-    },
-    createdAt:{
-        type:Date,
-        default:Date.now
-    }
+    author:{type:mongoose.Schema.Types.ObjectId,ref:"Writer"},
+    comments:[{type:mongoose.Schema.Types.ObjectId,ref:"Comment"}],
+    likes:[{type:mongoose.Schema.Types.ObjectId,ref:"User"}]
+},{
+    timestamps:true
 })
 const Blog=mongoose.model("Blog",blogSchema);
-module.exports=Blog;
+export default Blog;
