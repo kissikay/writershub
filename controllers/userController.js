@@ -27,26 +27,26 @@ export const registerUser = async (req, res) => {
 		res.cookie("token",token,{
 			httpOnly:true,
 			secure:false,
-			sameSite:'strict'
+			sameSite:'strict' 
 		});
-		res.redirect('/posts');
+		return res.redirect('/posts');
 	} catch (err) {
-		res.status(500).send('Server error. Registration failed');
+		return res.status(500).send('Server error. Registration failed');
 	}
 };
 export const login=async(req,res)=>{
 	try{
 		const {Email,password}=req.body;
 		if(!username || !password){
-			res.status(400).json("All fields are required");
+			return res.status(400).json("All fields are required");
 		}
 		const user=await User.findOne(Email);
 		if(!user){
-			res.status(404).json("User not found!")
+			return res.status(404).json("User not found!")
 		}
 		validUser= await bcrypt.compare(password,user.password);
 		if(!validUser){
-			res.status(500).json("Invalid Password!")
+			return res.status(500).json("Invalid Password!")
 		}
 		//Assign token with JWT
 		token= generateToken({_id:id,role:"user"})
@@ -55,9 +55,9 @@ export const login=async(req,res)=>{
 			secure:false,
 			sameSite:'strict'
 		});
-		res.redirect('/posts');
+		return res.redirect('/posts');
 	}catch(error){
-		res.status(500).json("Error logging in")
+		return res.status(500).json("Error logging in")
 	}
 }
 export const deleteUser=async(req,res)=>{
@@ -65,11 +65,11 @@ export const deleteUser=async(req,res)=>{
 		const name=req.user.name;
 		const id=req.user.id;
 		if(!name || !id){
-			res.status(400).json("Info not available")
+			return res.status(400).json("Info not available")
 		}
 		await user.deleteOne(id)
 	}catch(err){
-		res.status(500).json("Account Deletion Failed!")
+		return res.status(500).json("Account Deletion Failed!")
 		console.log(error)
 	} 
 }
@@ -85,7 +85,7 @@ export const updateUser=async(req,res)=>{
         }
         res.status(200).json("User updated successfully");
     }catch(error){
-        console.log(error);
+        console.log
         res.status(500).json("Error updating user");
     }
 }

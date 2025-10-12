@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h3>Login</h3>
+    </header>
+    <main>
+        <form id="user">
+            <input type="text" placeholder="username" name="username" id="Uusername">
+            <input type="password" placeholder="password" name="password" id="Upassword">
+            <button type="button" id="Usubmit">Submit</button>
+        </form>
+        <form id="writer">
+            <input type="text" name="username" id="Wusername">
+            <input type="password" name="password" id="Wpassword">
+            <button type="button" id="Wsubmit">Submit</button>
+        </form>
+        <button type="button" id="w">Login as user</button>
+        <button type="button" id="u">Login as writer</button>
+        <script>
+           const w=document.querySelector("button#w");
+            const u=document.querySelector("button#u")
+            window.onload=function(){
+                w.style.display="none";
+                document.querySelector("form#writer").style.display="none";
+            }
+            w.onclick= function(){
+                document.querySelector("form#user").style.display="block";
+                document.querySelector("form#writer").style.display="none";
+                u.style.display="block";
+                this.style.display="none";
+            }
+            u.onclick=function(){
+                document.querySelector("form#user").style.display="none";
+                document.querySelector("form#writer").style.display="block";
+                w.style.display="block";
+                this.style.display="none";
+            }
+            const Uform=document.querySelector("button#Usubmit");
+            Uform.addEventListener("click",(e)=>{
+                e.preventDefault();
+                const username=document.querySelector("input#Uusername").value;
+                const password=document.querySelector("input#Upassword").value;
+                const data={"name":username,"password":password}
+                fetch("/user/login",{
+                    method:"POST",
+                    body:JSON.stringify(data)
+                })
+            })
+            Wform=document.querySelector("button#Wsubmit")
+            Wform.addEventListener("click",(e)=>{
+                e.preventDefault();
+                const username=document.querySelector("input#Uusername").value;
+                const password=document.querySelector("input#Upassword").value;
+                console
+                const data={"name":username,"password":password}
+                
+                fetch("/writer/login",{
+                    method:"POST",
+                        headers: {"Content-Type": "application/json"},  
+                    body:JSON.stringify(data)
+                }).then(res=>{
+                    console.log(res)
+                }).catch(error=>console.log(error))
+            });
+        </script>
+    </main>
+</body>
+</html>

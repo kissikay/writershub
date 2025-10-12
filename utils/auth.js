@@ -6,13 +6,13 @@ export const authwriter=async (req,res,next)=>{
       const token=req.cookies.token;
       if(!token) return res.status.json({"message":"Unauthorised"});
       const decoded= jwt.verify(token,process.env.SECRET_KEY)
-      if(role&&decoded.role!==role) return res.status(401).json({"message":"Forbidden"})
+      if(role&&decoded.role!==role) return res.status(401).json({"message":"Forbidden"});
         const writer=Writer.findById(decoded._id);
         req.user=writer;
       next();
   }catch(error){
     console.log(error)
-    res.status(401).json({"message":"invalid token"})
+    return res.status(401).json({"message":"invalid token"});
   }
 }
 export const authenticate = async (req, res, next) => {
@@ -28,7 +28,7 @@ export const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(401).json({ error: 'Please authenticate.' });
+    return res.status(401).json({ error: 'Please authenticate.' });
   }
 };
 export const generateToken = (user) => {

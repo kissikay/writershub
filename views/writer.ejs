@@ -6,6 +6,51 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Writer Page</h1>
+    <form>
+        <input type="text" name="firstname" id="firstname" placeholder="firstname">
+        <input type="text" name="lastname" id="lastname" placeholder="lastname">
+        <input type="text" name="username" id="username" placeholder="username">
+        <input type="email" name="email" id="email" placeholder="email">
+        <input type="text" name="bio" id="bio" placeholder="bio">
+        <input type="password" name="password" id="password" placeholder="password">
+        <button type="submit">Submit</button>
+    </form>
+    <script>
+        const form = document.querySelector("form");
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const PID = Number(new Date());
+            const id = `w${PID}`;
+            const firstname = document.querySelector("input#firstname").value;
+            const lastname = document.querySelector("input#lastname").value;
+            const username = document.querySelector("input#username").value;
+            const email = document.querySelector("input#email").value;
+            const bio = document.querySelector("input#bio").value;
+            const password = document.querySelector("input#password").value;
+            const data = { id, firstname, lastname, username, email, bio, password };
+
+            try {
+                const response = await fetch("/writer/register", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data),
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+                if (result.status === "success") {
+                    window.location.href = "/dashboard";
+                } else {
+                    alert(result.message);
+                }
+            } catch (err) {
+                console.error(err);
+                alert("An error occurred.");
+            }
+        });
+    </script>
 </body>
 </html>

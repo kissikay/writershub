@@ -6,10 +6,12 @@ import writerRoute from "./routes/writerRoute.js"
 import commentRoute from "./routes/commentRoute.js";
 import { db } from './utils/database.js';
 import dotenv from "dotenv"
+import morgan from 'morgan';
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+app.use(morgan('dev'));
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -18,7 +20,7 @@ app.set('view engine', 'ejs');
 //Rest API endpoints 
 app.use("/user",userRoute)
 app.use("/blog",blogRoute)
-app.use("/writer",writerRoute)
+app.use("/writer",writerRoute) 
 app.use("/comment",commentRoute)   
 //Rendering
 app.get('/',(req,res)=>{
@@ -41,6 +43,9 @@ app.get('/favorite',(req,res)=>{
 })
 app.get('/writer',(req,res)=>{
     res.render("writer")
+})
+app.get("/login",(req,res)=>{
+    res.render("login");
 })
 app.use((req,res)=>{
     res.render("404");
