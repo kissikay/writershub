@@ -8,7 +8,6 @@ import { db } from './utils/database.js';
 import dotenv from "dotenv"
 import morgan from 'morgan';
 dotenv.config();
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(morgan('dev'));
@@ -29,13 +28,13 @@ app.get('/',(req,res)=>{
 app.get('/posts',(req,res)=>{
     res.render("posts")
 })
-app.get('/uaccount',(req,res)=>{
+app.get('/user/account',(req,res)=>{
     res.render("userAccount")
 })
 app.get('/waccount',(req,res)=>{
     res.render('wroterAccount')
 })
-app.get('/dashoard',(req,res)=>{
+app.get('/dashboard',(req,res)=>{
     res.render("writerDashboard");
 })
 app.get('/favorite',(req,res)=>{
@@ -46,6 +45,9 @@ app.get('/writer',(req,res)=>{
 })
 app.get("/login",(req,res)=>{
     res.render("login");
+})
+app.get("/user",(req,res)=>{
+    res.render('user');
 })
 app.use((req,res)=>{
     res.render("404");

@@ -31,7 +31,9 @@ export const registerWriter = async (req, res) => {
 			sameSite:'strict'
 		});
 		console.log("cookie success")
-		res.send({"status":"success"})
+		res.send({"status":"success",
+		"message":"Writer registered successfully"});
+			// res.redirect('/dashboard');	
 	} catch (err) {
 		console.error(err);
 		return res.status(500).send('Server error.');
@@ -40,17 +42,19 @@ export const registerWriter = async (req, res) => {
 export const loginWriter=async(req,res)=>{
 	try{
 		const {email,password}=req.body;
-		console.log(password)
+		console.log(req.body)
+		
 		if(!email || !password){
-			return res.status(400).json("All fields are required")
+			return res.status(400).send("All fields are required")
 		}
-		const writer=await Writer.findOne({ email });
+		const writer=await Writer.findOne({"email":email});
+		
 		if (!writer) {
-            return res.status(400).json({"message":"Writer not found"});
+            return res.status(400).json("Writer not found");
         }
 		const valid=await bcrypt.compare(password,writer.password)
 		if(!valid){
-			return res.status(400).json("Invalid Password");
+			return res.status(400).send("Invalid Password");
 			
 		}
 		//Assign token with JWT
@@ -60,7 +64,9 @@ export const loginWriter=async(req,res)=>{
 			secure:false,
 			sameSite:'strict'
 		});
-		return res.redirect('/dashboard');
+		return res.send({"status":"success",
+		"message":"Writer logged in successfully"});
+		// return res.redirect('/dashboard');
 	}catch(error){
 		console.log(error);
 		return res.status(500).json("Login failed!")

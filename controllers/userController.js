@@ -1,11 +1,12 @@
 import User from '../models/user.js';
 import bcrypt from 'bcrypt';
 
-// POST /user/create
+// POST /user/register
+import { generateToken } from '../utils/auth.js';
 export const registerUser = async (req, res) => {
 	try {
-		const {id, username, email, phone, password } = req.body;
-		if (!id,!username || !email || !phone || !password) {
+		const {id, username, email, gender,dob, password } = req.body;
+		if (!id||!username || !email || !phone || !password) {
 			return res.status(400).send('All fields are required.');
 		}
 		// Check if user already exists
@@ -17,19 +18,22 @@ export const registerUser = async (req, res) => {
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const newUser = new User({
 			id:id,
-			username:name,
+			username:username,
 			email:email,
 			phone:phone,
 			password: hashedPassword,
 		});
 		await newUser.save();
-		token= generateToken({_id:id,role:"user"})
+		const token= generateToken({_id:id,role:"user"})
 		res.cookie("token",token,{
 			httpOnly:true,
 			secure:false,
 			sameSite:'strict' 
 		});
-		return res.redirect('/posts');
+		return res.send({
+			"status":"success",
+			"message":"user registered successfully"
+		})
 	} catch (err) {
 		return res.status(500).send('Server error. Registration failed');
 	}
@@ -67,16 +71,15 @@ export const deleteUser=async(req,res)=>{
 		if(!name || !id){
 			return res.status(400).json("Info not available")
 		}
-		await user.deleteOne(id)
+		await User.deleteOne(id);
 	}catch(err){
-		return res.status(500).json("Account Deletion Failed!")
-		console.log(error)
+		return res.status(500).json("Account Deletion Failed!");
 	} 
 }
 export const updateUser=async(req,res)=>{
     try{
         const {userId,newName,newEmail}=req.body;
-        if(!userId || !newName || !newEmail){
+        if(!userId || !newName || !newEmail){	
             return res.status(400).json("All fields are required");
         }
         const user=await User.findByIdAndUpdate(userId,{name:newName,email:newEmail},{new:true});

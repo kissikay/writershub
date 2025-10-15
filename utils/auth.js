@@ -28,10 +28,9 @@ export const authenticate = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    return res.status(401).json({ error: 'Please authenticate.' });
+    return res.status(401).se({ error: 'Please authenticate.' });
   }
 };
 export const generateToken = (user) => {
   return jwt.sign({ _id: user._id, role: user.role }, process.env.SECRET_KEY, { expiresIn: '1d' });
 };
-

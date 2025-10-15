@@ -7,5 +7,27 @@
 </head>
 <body>
     <h1>User Page</h1>
+    <form >
+        <input type="text" name="username" id="username" placeholder="username"><br>
+        <input type="email" name="email" id="email" placeholder="email"><br>
+        <input type="radio" name="gender" id="m" value="m"> Male <br>
+        <input type="radio" name="gender" id="f" value="f"> Female <br>
+        <input type="date" name="dob" id="dob" placeholder="Date of Birth"><br>
+        <input type="password" name="password" id="password" placeholder="password"><br>
+        <button type="button" id="register">Submit</button>
+    </form>
+    <script>
+        const btn=document.querySelector("button#register");
+        btn.addEventListener("click",(e)=>{
+            e.preventDefault();
+            const username=document.querySelector('input#username').value;
+            const password=document.querySelector("input#password").value;
+            const email= document.querySelector("input#email").value;
+            const gender=document.querySelector("input[name='gender']:checked").value;
+            const dob=document.querySelector("input#dob").value;
+        
+            console.log(username,password,dob,gender,email)
+        })
+    </script>
 </body>
 </html>
