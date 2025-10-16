@@ -18,16 +18,40 @@
     </form>
     <script>
         const btn=document.querySelector("button#register");
-        btn.addEventListener("click",(e)=>{
+        btn.addEventListener("click", async (e)=>{
             e.preventDefault();
-            const username=document.querySelector('input#username').value;
-            const password=document.querySelector("input#password").value;
+            const username= document.querySelector('input#username').value;
+            const password= document.querySelector("input#password").value;
             const email= document.querySelector("input#email").value;
-            const gender=document.querySelector("input[name='gender']:checked").value;
-            const dob=document.querySelector("input#dob").value;
-        
-            console.log(username,password,dob,gender,email)
+            const gender= document.querySelector("input[name='gender']:checked").value;
+            const dob= document.querySelector("input#dob").value;
+            const pid= Number(Date.now());
+            const id= `u${pid}`;
+            console.log(id, username, password, dob, gender, email)
+            const data={"id":id,"username":username,"dob":dob,"gender":gender,"email":email,"password":password}
+            console.log(data);
+            try{
+            const response = await fetch("/user/register",{
+                method:"POST",
+                headers:{
+                    "Content-Type":"application/json"
+                },
+                body:JSON.stringify(data),
+            });
+            if(!response.ok){
+                throw new Error(`HTTP error! status :${response.status} message:${response.body}`)
+            }
+
+            const result=await response.json();
+            if(result.status==="success"){
+                window.location.href="/user/account"
+            }
+                console.log("message:",result.message)
+        }catch(err){
+            console.log(err)
+        }
         })
+
     </script>
 </body>
 </html>

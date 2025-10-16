@@ -8,6 +8,7 @@ import { db } from './utils/database.js';
 import dotenv from "dotenv"
 import morgan from 'morgan';
 dotenv.config();
+//middlewares
 const app = express();
 const PORT = process.env.PORT || 3000;
 app.use(morgan('dev'));

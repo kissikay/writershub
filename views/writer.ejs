@@ -35,7 +35,7 @@
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(data),
                 });
- 
+
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -46,6 +46,7 @@
                 } else {
                     alert(result.message);
                 }
+                
             } catch (err) {
                 console.error(err);
                 alert("An error occurred.");

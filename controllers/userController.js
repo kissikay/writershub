@@ -5,22 +5,24 @@ import bcrypt from 'bcrypt';
 import { generateToken } from '../utils/auth.js';
 export const registerUser = async (req, res) => {
 	try {
-		const {id, username, email, gender,dob, password } = req.body;
-		if (!id||!username || !email || !phone || !password) {
-			return res.status(400).send('All fields are required.');
+		const {id, username,dob,gender,email, password } = req.body;
+		console.log(req.body);
+		if (!id || !username || !email || !dob || !gender || !password) {
+			return res.status(400).send({"message":'All fields are required.'});
 		}
 		// Check if user already exists
 		const existingUser = await User.findOne({ email });
 		if (existingUser) {
-			return res.status(409).send('User already registered with this email.');
+			return res.status(409).send({message:'User already registered with this email.'});
 		}
 		// Hash password
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const newUser = new User({
 			id:id,
 			username:username,
+			gender:gender,
+			dob:dob,
 			email:email,
-			phone:phone,
 			password: hashedPassword,
 		});
 		await newUser.save();
@@ -35,28 +37,29 @@ export const registerUser = async (req, res) => {
 			"message":"user registered successfully"
 		})
 	} catch (err) {
-		return res.status(500).send('Server error. Registration failed');
+		return res.status(500).send({message:'Server error. Registration failed'});
 	}
 };
 export const login=async(req,res)=>{
 	try{
 		const {Email,password}=req.body;
-		if(!username || !password){
+		if(!Email || !password){
 			return res.status(400).json("All fields are required");
 		}
 		const user=await User.findOne(Email);
 		if(!user){
 			return res.status(404).json("User not found!")
 		}
-		validUser= await bcrypt.compare(password,user.password);
+		const validUser= await bcrypt.compare(password,user.password);
 		if(!validUser){
 			return res.status(500).json("Invalid Password!")
 		}
 		//Assign token with JWT
-		token= generateToken({_id:id,role:"user"})
+		const token= generateToken({_id:user.id,role:"user"})
+		console.log(token)
 		res.cookie("token",token,{
 			httpOnly:true,
-			secure:false,
+			secure:Boolean(process.env.isDevelopment),
 			sameSite:'strict'
 		});
 		return res.redirect('/posts');
@@ -78,17 +81,19 @@ export const deleteUser=async(req,res)=>{
 }
 export const updateUser=async(req,res)=>{
     try{
-        const {userId,newName,newEmail}=req.body;
-        if(!userId || !newName || !newEmail){	
+        const {newName}=req.body;
+		const id=req.user.id;
+        if(!id || !newName ){	
             return res.status(400).json("All fields are required");
         }
-        const user=await User.findByIdAndUpdate(userId,{name:newName,email:newEmail},{new:true});
+        const user=await User.findByIdAndUpdate(id,{name:newName},{new:true});
         if(!user){
             return res.status(404).json("User not found");
         }
-        res.status(200).json("User updated successfully");
+        res.status(200).send({
+			"status":"success",
+			"message":"User updated successfully"});
     }catch(error){
-        console.log
         res.status(500).json("Error updating user");
     }
 }
