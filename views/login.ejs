@@ -11,7 +11,7 @@
     </header>
     <main>
         <form id="user">
-            <input type="text" placeholder="username" name="username" id="Uusername">
+            <input type="email" placeholder="Email" name="email" id="Umail">
             <input type="password" placeholder="password" name="password" id="Upassword">
             <button type="button" id="Usubmit">Submit</button>
         </form>
@@ -44,11 +44,14 @@
             const Uform=document.querySelector("button#Usubmit");
             Uform.addEventListener("click",(e)=>{
                 e.preventDefault();
-                const username=document.querySelector("input#Uusername").value;
+                const email=document.querySelector("input#Umail").value;
                 const password=document.querySelector("input#Upassword").value;
-                const data={"name":username,"password":password}
+                const data={"Email":email,"password":password}
                 fetch("/user/login",{
                     method:"POST",
+                    headers:{
+                        "Content-type":"application/json"
+                    },
                     body:JSON.stringify(data)
                 })
                 .then((res)=>res.json()).then((data)=>{

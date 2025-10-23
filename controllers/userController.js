@@ -43,10 +43,11 @@ export const registerUser = async (req, res) => {
 export const login=async(req,res)=>{
 	try{
 		const {Email,password}=req.body;
-		if(!Email || !password){
+		console.log(req.body) 
+		if( !Email || !password ){
 			return res.status(400).json("All fields are required");
 		}
-		const user=await User.findOne(Email);
+		const user=await User.findOne({email:Email});
 		if(!user){
 			return res.status(404).json("User not found!")
 		}
@@ -56,15 +57,18 @@ export const login=async(req,res)=>{
 		}
 		//Assign token with JWT
 		const token= generateToken({_id:user.id,role:"user"})
-		console.log(token)
 		res.cookie("token",token,{
 			httpOnly:true,
-			secure:Boolean(process.env.isDevelopment),
+			secure:false,
 			sameSite:'strict'
 		});
-		return res.redirect('/posts');
+		return res.send({
+			"status":"success",
+			"message":"logged in sucessfully!"
+		});
 	}catch(error){
-		return res.status(500).json("Error logging in")
+		console.log(error)
+		 res.status(500).json("Error logging in")
 	}
 }
 export const deleteUser=async(req,res)=>{

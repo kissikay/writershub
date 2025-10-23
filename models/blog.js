@@ -10,7 +10,8 @@ const blogSchema= new mongoose.Schema({
     },
     imageURL:{
         type:String,
-        required:true
+        required:true,
+        default:null
     },
     author:{type:mongoose.Schema.Types.ObjectId,ref:"Writer"},
     comments:[{type:mongoose.Schema.Types.ObjectId,ref:"Comment"}],

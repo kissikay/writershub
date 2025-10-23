@@ -6,8 +6,8 @@ export const authwriter=async (req,res,next)=>{
       const token=req.cookies.token;
       if(!token) return res.status.json({"message":"Unauthorised"});
       const decoded= jwt.verify(token,process.env.SECRET_KEY)
-      if(role&&decoded.role!==role) return res.status(401).json({"message":"Forbidden"});
-        const writer=Writer.findById(decoded._id);
+      if(role && decoded.role!==role) return res.status(401).json({"message":"Forbidden"});
+        const writer=await Writer.findById(decoded._id);
         req.user=writer;
       next();
   }catch(error){
