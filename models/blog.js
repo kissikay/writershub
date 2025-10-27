@@ -8,6 +8,10 @@ const blogSchema= new mongoose.Schema({
         type:String,
         required:true
     },
+    category:{
+        type:String,
+        required:false,
+    },
     imageURL:{
         type:String,
         required:true,

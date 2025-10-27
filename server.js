@@ -50,9 +50,13 @@ app.get("/login",(req,res)=>{
 app.get("/user",(req,res)=>{
     res.render('user');
 })
+app.get("/new/blog",(req,res)=>{
+    res.render("newBlog");
+})
 app.use((req,res)=>{
     res.render("404");
 })
+
 app.listen(PORT,async()=>{
     await db();
     console.log(`Server is running on port ${PORT}`);

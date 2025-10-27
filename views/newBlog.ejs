@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="/blog/create" method="post" enctype="application/x-www-form-urlencoded">
+    <input type="text" name="title" placeholder="Blog Title" required>
+    <textarea name="body" placeholder="Blog Body" required></textarea>
+    <!-- <input type="file" name="img" accept=".jpg,jpeg,png,webp" required> -->
+     <select name="category" id="category">
+        <option value="Technology">Technology</option>
+        <option value="sci-fi">Sci-Fi</option>
+        <option value="Business">Business</option>
+        <option value="Politics">Politics</option>
+        <option value="Romance">Romance</option>
+        <option value="Horror">Horror</option>
+        <option value="Comedy">Comedy</option>
+        <option value="Health">Health</option>
+        <option value="Travel">Travel</option>
+        <option value="Food">Food</option>
+        <option value="Lifestyle">Lifestyle</option>
+        <option value="Education">Education</option>
+        <option value="Finance">Finance</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Sports">Sports</option>
+        <option value="Fashion">Fashion</option>
+     </select>
+    <button type="submit">Create Blog</button>
+    <!-- <script>
+        const form = document.querySelector('form').addEventListener('submit', (e) => {
+            const file = document.querySelector('input[type="file"]').files[0];
+            if (file.size > 8 * 1024 * 1024) { // 8MB limit
+                e.preventDefault();
+                alert('File size exceeds 8MB limit.');
+            }
+            if(!file.length()){
+                e.preventDefault();
+                alert('Please select a file to upload.');
+            }
+            const allowedExtensions = /(\.jpg|\.jpeg|\.png|\.webp)$/i;
+            if (!allowedExtensions.exec(file.name)) {
+                e.preventDefault();
+                alert('Invalid file type. Please upload an image file (JPG, JPEG, PNG, WEBP).');
+            }
+        });
+    </script> -->
+</form>
+</body>
+</html>
