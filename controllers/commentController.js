@@ -3,39 +3,41 @@ import Comment from "../models/comment.js";
 export const addlike=async(req,res)=>{
     try{
         const blogId=req.params.blogId;
-        const userId=req.user.id;
+        const userId=req.user[0].id;
         const blog=await Blog.findById(blogId);
         if(!blog){
            return res.status(404).json("Blog not found")
         }
-        if(blog.likes.includes(userId)){
-           return res.status(400).json("You have already liked this post")
+         const index=blog.likes.indexOf(userId);
+        if(index===-1){
+           return res.status(400).json("You haven't liked this post")
         }
+        if(blog.likes.includes(userId)){
+            blog.likes.splice(index,1);
+        }
+        res.json({'message':'like removed'})
         blog.likes.push(userId)
         await blog.save();
     }catch(error){
         res.status(500).json("An error occurred please try again")
     }
-}
-export const removeLike=async(req,res)=>{
-    try{
-        const blogId=req.params.blogId;
-        const userId=req.user._id;
-        const blog=await Blog.findById(blogId)
-        if(!blog){
-           return res.status(404).json("Blog not found")
-        }
-        const index=blog.likes.indexOf(userId);
-        if(index===-1){
-           return res.status(400).json("You haven't liked this post")
-        }
-        blog.likes.splice(index,1);
-        await blog.save();
-        res.json("Like removed successfully");
-    }catch(error){
-        res.status(500).json("An error occurred please try again")
-    }
-}
+ }
+// export const removeLike=async(req,res)=>{
+//     try{
+//         const blogId=req.params.blogId;
+//         const userId=req.user._id;
+//         const blog=await Blog.findById(blogId)
+//         if(!blog){
+//            return res.status(404).json("Blog not found")
+//         }
+//        
+        
+//         await blog.save();
+//         res.json("Like removed successfully");
+//     }catch(error){
+//         res.status(500).json("An error occurred please try again")
+//     }
+// }
 export const addComment=async(req,res)=>{
     try{
     const blogId=req.params.blogId;

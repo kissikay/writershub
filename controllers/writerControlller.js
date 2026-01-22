@@ -32,8 +32,7 @@ export const registerWriter = async (req, res) => {
 		});
 		console.log("cookie success")
 		res.send({"status":"success",
-		"message":"Writer registered successfully"});
-			// res.redirect('/dashboard');	
+		"message":"Writer registered successfully"});	
 	} catch (err) {
 		console.error(err);
 		return res.status(500).send('Server error.');
@@ -58,7 +57,7 @@ export const loginWriter=async(req,res)=>{
 			
 		}
 		//Assign token with JWT
-        const token= generateToken({_id:writer.id,role:writer.role|"writer"})
+        const token= generateToken({_id:writer.id})
 		res.cookie("token",token,{
 			httpOnly:true,
 			secure:false,
@@ -66,7 +65,6 @@ export const loginWriter=async(req,res)=>{
 		});
 		return res.send({"status":"success",
 		"message":"Writer logged in successfully"});
-		// return res.redirect('/dashboard');
 	}catch(error){
 		console.log(error);
 		return res.status(500).json("Login failed!")

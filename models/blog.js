@@ -1,5 +1,9 @@
-import mongoose, { Types } from "mongoose";
+import mongoose from "mongoose";
 const blogSchema= new mongoose.Schema({
+    id:{
+        type:String,
+        required:true
+    },
     title:{
         type:String,
         required:true
@@ -14,12 +18,12 @@ const blogSchema= new mongoose.Schema({
     },
     imageURL:{
         type:String,
-        required:true,
         default:null
     },
     author:{type:mongoose.Schema.Types.ObjectId,ref:"Writer"},
     comments:[{type:mongoose.Schema.Types.ObjectId,ref:"Comment"}],
-    likes:[{type:mongoose.Schema.Types.ObjectId,ref:"User"}]
+    likes:[{type:mongoose.Schema.Types.ObjectId,ref:"User"}],
+    readCount:[{type:mongoose.Schema.Types.ObjectId,ref:'User'}]
 },{
     timestamps:true
 })

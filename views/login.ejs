@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 <body>
     <header>
-        <h3>Login</h3>
+        <h3 class="bg-red-500">Login</h3>
     </header>
     <main>
         <form id="user">
@@ -24,7 +25,7 @@
         <button type="button" id="u">Login as writer</button>
         <script>
            const w=document.querySelector("button#w");
-            const u=document.querySelector("button#u")
+            const u=document.querySelector("button#u");
             window.onload=function(){
                 w.style.display="none";
                 document.querySelector("form#writer").style.display="none";

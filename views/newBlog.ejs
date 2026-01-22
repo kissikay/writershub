@@ -7,8 +7,8 @@
 </head>
 <body>
     <form action="/blog/create" method="post" enctype="application/x-www-form-urlencoded">
-    <input type="text" name="title" placeholder="Blog Title" required>
-    <textarea name="body" placeholder="Blog Body" required></textarea>
+    <input type="text" name="title" placeholder="Blog Title" id="title" required>
+    <textarea name="body" placeholder="Blog Body" id="body" required></textarea>
     <!-- <input type="file" name="img" accept=".jpg,jpeg,png,webp" required> -->
      <select name="category" id="category">
         <option value="Technology">Technology</option>
@@ -29,6 +29,15 @@
         <option value="Fashion">Fashion</option>
      </select>
     <button type="submit">Create Blog</button>
+    <script>
+        const form=document.querySelector('form').addEventListener('submit',(e)=>{
+            const title=document.querySelector("input#title").value;
+            const body=document.querySelector("textarea#body").value;
+            const category=document.querySelector("select").value;
+            if(title||body||category) console.log(title,body,category)
+            else throw new Error("Parts of the form is undefined",title,body,category)
+        })
+    </script>
     <!-- <script>
         const form = document.querySelector('form').addEventListener('submit', (e) => {
             const file = document.querySelector('input[type="file"]').files[0];

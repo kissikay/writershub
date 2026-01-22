@@ -3,6 +3,7 @@ import bcrypt from 'bcrypt';
 
 // POST /user/register
 import { generateToken } from '../utils/auth.js';
+import { name } from 'ejs';
 export const registerUser = async (req, res) => {
 	try {
 		const {id, username,dob,gender,email, password } = req.body;
@@ -26,7 +27,7 @@ export const registerUser = async (req, res) => {
 			password: hashedPassword,
 		});
 		await newUser.save();
-		const token= generateToken({_id:id,role:"user"})
+		const token= generateToken({_id:id,role:'user'})
 		res.cookie("token",token,{
 			httpOnly:true,
 			secure:false,
@@ -73,8 +74,8 @@ export const login=async(req,res)=>{
 }
 export const deleteUser=async(req,res)=>{
 	try{
-		const name=req.user.name;
-		const id=req.user.id;
+		const name=req.user[0].name;
+		const id=req.user[0].id;
 		if(!name || !id){
 			return res.status(400).json("Info not available")
 		}
@@ -85,11 +86,15 @@ export const deleteUser=async(req,res)=>{
 }
 export const updateUser=async(req,res)=>{
     try{
-        const {newName}=req.body;
-		const id=req.user.id;
-        if(!id || !newName ){	
+        const temp=req.body;
+		const val=temp.key();
+        if(!temp){	
             return res.status(400).json("All fields are required");
         }
+		switch(val){
+			case name:
+				
+		}
         const user=await User.findByIdAndUpdate(id,{name:newName},{new:true});
         if(!user){
             return res.status(404).json("User not found");
@@ -100,4 +105,12 @@ export const updateUser=async(req,res)=>{
     }catch(error){
         res.status(500).json("Error updating user");
     }
+}
+export const logout=async(req,res)=>{
+	try{
+		res.clearCookie('token');
+		res.redirect('/login');
+	}catch(error){
+		res.render('Error',{'error':"Failed to logout!"})
+	}
 }

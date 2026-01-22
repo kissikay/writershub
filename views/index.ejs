@@ -4,8 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body>
-    <h1>Landing Page</h1>
+<body class=" overflow-x-hidden">
+    <header class=" w-full my-5  py-4 shadow-md sticky top-0 z-2 bg-white ">
+        <div class="mx-auto container flex ">
+        <h3 class="text-3xl flex mx-4 self-center w-full">Writers<span class="text-primary">Hub</span></h3>
+        <nav class="w-full flex self-center">
+            <ul class="flex w-full justify-around items-center mx-0">
+                <li><a class="text-black hover:text-red-500 font-medium" href="/">Home</a></li>
+                <li><a class="text-black hover:text-red-500 font-medium" href="/">Read</a></li>
+                <li><a class="text-black hover:text-red-500 font-medium" href="">Trending</a></li>
+                <li><a class="text-black hover:text-red-500 font-medium" href="">About</a></li>
+                <li><a class="text-black hover:text-red-500 font-medium" href="">Contact</a></li>
+            </ul>
+        </nav>
+        </div>
+    </header>
+    <main>
+        <section class="flex justify-center container mx-auto my-5">
+            <div class="p-5 py-0 flex items-center justify-center flex-col">
+                <h3 class="my-5 text-5xl font-medium w-full">Welcome to WritersHub</h3>
+                <p class="my-4 text-2xl font-thin text-black-400">A place where writers create their dreams and readers build their imaginations!</p>
+            </div>
+            <div><img src="/images/book.jpeg" alt="" class="w-full h-full"></div>
+        </section>
+        <section class="flex justify-center items-center w-full  my-max container mx-auto min-h[80vh]">
+            <ul class="flex w-full gap-12 justify-center items-center my-max py-10">
+                <li class="transition-all duration-300 ease-in-out rounded px-4 shadow-lg w-40  mx-5 hover:shadow-red-200 w-40 flex justify-center ">
+                    <p class="m-5 text-primary text-2xl"><span class=" text-black">200+</span > Books</p>
+                </li>
+                <li class="rounded shadow-md mx-5 hover:shadow-red-200 w-40">
+                    <p class="m-5 text-primary text-2xl"><span class="text-black">1300+</span><br>Users</p>
+                </li>
+                <li class="rounded px-4 shadow-md mx-5 hover:shadow-red-200 w-40">
+                    <p class="m-5 text-primary text-2xl"><span class="text-black">50+</span><br>Writers</p>
+                </li>
+                <li class="rounded px-4 shadow-md mx-5 hover:shadow-red-200 w-40">
+                    <p class="m-5 text-primary text-2xl"><span class="text-black">3000+</span><br>Visitors</p>
+                </li>
+            </ul>
+        </section>
+    </main>
 </body>
 </html>

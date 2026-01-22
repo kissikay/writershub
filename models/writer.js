@@ -29,6 +29,11 @@ const writerSchema = new mongoose.Schema({
          type: String,
          required: true
     },
+    followers: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
+    point:{
+            type:Number,
+          default:0
+    },
     role: {
         type: String,
         required: true,
